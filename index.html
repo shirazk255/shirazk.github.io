@@ -1,0 +1,1001 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=1200, initial-scale=1">
+    <title>Khattanas | Modern Fashion</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#2c3e50',
+                        secondary: '#e74c3c',
+                        accent: '#3498db',
+                        light: '#ecf0f1',
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1; 
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #888; 
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #555; 
+        }
+        
+        /* Hide scrollbar for horizontal scrolling sections */
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+
+        /* Toast Animation */
+        @keyframes slideIn {
+            from { transform: translateX(100%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+        .toast-enter {
+            animation: slideIn 0.3s ease-out forwards;
+        }
+    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+</head>
+<body class="bg-gray-50 text-gray-800 font-sans flex flex-col min-h-screen min-w-[1024px]">
+
+    <!-- HEADER -->
+    <header class="bg-white shadow-md sticky top-0 z-50">
+        <div class="container mx-auto px-4 py-4 flex justify-between items-center">
+            <!-- Logo -->
+            <a href="#" onclick="app.navigate('home')" class="text-2xl font-bold tracking-tight text-primary flex items-center gap-2">
+                <i class="fa-solid fa-layer-group text-secondary"></i> KHATTANAS
+            </a>
+
+            <!-- Navigation -->
+            <nav class="flex space-x-8 font-medium text-gray-600">
+                <a href="#" onclick="app.navigate('home')" class="hover:text-primary transition">Home</a>
+                <a href="#" onclick="app.navigate('gender', 'womens')" class="hover:text-primary transition">Women</a>
+                <a href="#" onclick="app.navigate('gender', 'mens')" class="hover:text-primary transition">Men</a>
+                <a href="#" onclick="app.navigate('browse')" class="hover:text-primary transition">Browse</a>
+                <a href="#" onclick="app.openModal('about-dialog')" class="hover:text-primary transition">About</a>
+            </nav>
+
+            <!-- Cart Icon -->
+            <div class="flex items-center gap-4">
+                <button onclick="app.navigate('cart')" class="relative p-2 hover:bg-gray-100 rounded-full transition group">
+                    <i class="fa-solid fa-shopping-cart text-xl text-gray-700 group-hover:text-primary"></i>
+                    <span id="cart-count" class="absolute top-0 right-0 bg-secondary text-white text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center transform scale-0 transition-transform duration-200">0</span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- MAIN CONTENT AREA -->
+    <main id="main-container" class="flex-grow container mx-auto px-4 py-6">
+        
+        <!-- VIEW: HOME -->
+        <article id="view-home" class="view-section hidden">
+            <!-- Hero Section -->
+            <div class="relative bg-gray-900 rounded-2xl overflow-hidden mb-12 shadow-2xl h-[500px]">
+                <img src="https://images.unsplash.com/photo-1483985988355-763728e1935b?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80" alt="Hero" class="absolute inset-0 w-full h-full object-cover opacity-60">
+                <div class="absolute inset-0 flex flex-col justify-center items-center text-center text-white px-4">
+                    <h1 class="text-6xl font-bold mb-6 drop-shadow-lg">Define Your Style</h1>
+                    <p class="text-2xl mb-8 max-w-2xl drop-shadow-md">Discover the latest trends in fashion. Quality materials, sustainable practices, and timeless designs.</p>
+                    <button onclick="app.navigate('browse')" class="bg-secondary hover:bg-red-600 text-white font-bold py-3 px-8 rounded-full transition transform hover:scale-105 shadow-lg">
+                        Shop Collection
+                    </button>
+                </div>
+            </div>
+
+            <!-- Featured Categories -->
+            <h2 class="text-3xl font-bold mb-8 text-center text-gray-800">Featured Categories</h2>
+            <div class="grid grid-cols-3 gap-8 mb-16">
+                <!-- Women's -->
+                <div onclick="app.navigate('gender', 'womens')" class="group cursor-pointer relative h-80 rounded-xl overflow-hidden shadow-lg">
+                    <img src="https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" class="w-full h-full object-cover transition duration-500 group-hover:scale-110">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent flex items-end p-6">
+                        <h3 class="text-white text-2xl font-bold">Women's Fashion</h3>
+                    </div>
+                </div>
+                <!-- Men's  -->
+                <div onclick="app.navigate('gender', 'mens')" class="group cursor-pointer relative h-80 rounded-xl overflow-hidden shadow-lg">
+                    <img src="https://images.unsplash.com/photo-1490578474895-699cd4e2cf59?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" class="w-full h-full object-cover transition duration-500 group-hover:scale-110">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent flex items-end p-6">
+                        <h3 class="text-white text-2xl font-bold">Men's Collection</h3>
+                    </div>
+                </div>
+                <!-- New Arrivals -->
+                <div onclick="app.navigate('browse')" class="group cursor-pointer relative h-80 rounded-xl overflow-hidden shadow-lg">
+                    <img src="https://images.unsplash.com/photo-1523381210434-271e8be1f52b?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" class="w-full h-full object-cover transition duration-500 group-hover:scale-110">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent flex items-end p-6">
+                        <h3 class="text-white text-2xl font-bold">New Arrivals</h3>
+                    </div>
+                </div>
+            </div>
+        </article>
+
+        <!-- VIEW: GENDER -->
+        <article id="view-gender" class="view-section hidden">
+            <div id="gender-hero" class="bg-gray-800 text-white rounded-xl p-12 mb-8 text-center bg-cover bg-center h-64 flex items-center justify-center relative overflow-hidden">
+                <div class="absolute inset-0 bg-black/50 z-0"></div>
+                <h1 id="gender-title" class="text-5xl font-bold relative z-10 capitalize">Title</h1>
+            </div>
+            
+            <h2 class="text-2xl font-bold mb-6">Shop by Category</h2>
+            <div id="gender-categories" class="grid grid-cols-4 gap-6">
+                <!-- Categories inserted here -->
+            </div>
+        </article>
+
+        <!-- VIEW: BROWSE (Filter & Sort) -->
+        <article id="view-browse" class="view-section hidden">
+            <!-- Flex Row -->
+            <div class="flex flex-row gap-8">
+                <!-- Sidebar Filters -->
+                <section id="filter" class="w-1/4 bg-white p-6 rounded-xl shadow-sm h-fit border border-gray-200">
+                    <div class="flex justify-between items-center mb-4">
+                        <h2 class="text-xl font-bold">Filters</h2>
+                        <button onclick="app.clearFilters()" class="text-sm text-secondary hover:underline">Clear All</button>
+                    </div>
+                    
+                    <!-- Filter Group: Gender -->
+                    <div class="mb-6">
+                        <h3 class="font-semibold mb-2 text-gray-700">Gender</h3>
+                        <div class="space-y-2">
+                            <label class="flex items-center space-x-2 cursor-pointer">
+                                <input type="checkbox" name="filter-gender" value="womens" class="form-checkbox text-secondary rounded focus:ring-secondary">
+                                <span>Women</span>
+                            </label>
+                            <label class="flex items-center space-x-2 cursor-pointer">
+                                <input type="checkbox" name="filter-gender" value="mens" class="form-checkbox text-secondary rounded focus:ring-secondary">
+                                <span>Men</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- Filter Group: Categories -->
+                    <div class="mb-6">
+                        <h3 class="font-semibold mb-2 text-gray-700">Category</h3>
+                        <div id="filter-categories" class="space-y-2 max-h-48 overflow-y-auto custom-scrollbar">
+                            <!-- Dynamic categories -->
+                        </div>
+                    </div>
+
+                    <!-- Filter Group: Colors -->
+                    <div class="mb-6">
+                        <h3 class="font-semibold mb-2 text-gray-700">Colors</h3>
+                        <div id="filter-colors" class="flex flex-wrap gap-2">
+                            <!-- Dynamic colors -->
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Results Area -->
+                <section id="results" class="w-3/4">
+                    <!-- Toolbar Forced Flex Row -->
+                    <div class="bg-white p-4 rounded-xl shadow-sm border border-gray-200 mb-6 flex flex-row justify-between items-center gap-4">
+                        <div class="text-gray-600" id="result-count">Showing 0 products</div>
+                        <div class="flex items-center gap-2">
+                            <label for="sort-select" class="text-sm font-medium text-gray-700">Sort by:</label>
+                            <select id="sort-select" onchange="app.handleSort(this.value)" class="border-gray-300 rounded-md text-sm focus:ring-secondary focus:border-secondary p-2 border">
+                                <option value="name-asc">Name (A-Z)</option>
+                                <option value="name-desc">Name (Z-A)</option>
+                                <option value="price-asc">Price (Low to High)</option>
+                                <option value="price-desc">Price (High to Low)</option>
+                                <option value="category">Category</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- Active Filters Badges -->
+                    <div id="active-filters" class="flex flex-wrap gap-2 mb-4"></div>
+
+                    <!-- Product Grid  -->
+                    <div id="product-grid" class="grid grid-cols-3 gap-6">
+                        <!-- Products inserted here -->
+                    </div>
+                    
+                    <div id="no-results" class="hidden text-center py-12">
+                        <i class="fa-solid fa-search text-4xl text-gray-300 mb-4"></i>
+                        <p class="text-xl text-gray-500">No products found matching your criteria.</p>
+                        <button onclick="app.clearFilters()" class="mt-4 text-secondary font-semibold">Reset Filters</button>
+                    </div>
+                </section>
+            </div>
+        </article>
+
+        <!-- VIEW: SINGLE PRODUCT -->
+        <article id="view-singleproduct" class="view-section hidden">
+            <!-- Breadcrumbs -->
+            <nav class="text-sm text-gray-500 mb-6">
+                <span class="hover:text-secondary cursor-pointer" onclick="app.navigate('home')">Home</span>
+                <i class="fa-solid fa-chevron-right text-xs mx-2"></i>
+                <span id="sp-breadcrumb-gender" class="hover:text-secondary cursor-pointer capitalize">Gender</span>
+                <i class="fa-solid fa-chevron-right text-xs mx-2"></i>
+                <span id="sp-breadcrumb-category" class="hover:text-secondary cursor-pointer capitalize">Category</span>
+                <i class="fa-solid fa-chevron-right text-xs mx-2"></i>
+                <span id="sp-breadcrumb-name" class="text-gray-800 font-semibold">Product Name</span>
+            </nav>
+
+            <div class="bg-white rounded-2xl shadow-lg p-10">
+                <!-- Flex Row -->
+                <div class="flex flex-row gap-10">
+                    <!-- Image Gallery -->
+                    <div class="w-1/2 space-y-4">
+                        <div class="aspect-[3/4] rounded-xl overflow-hidden bg-gray-100 relative">
+                            <img id="sp-image" src="" alt="Product" class="w-full h-full object-cover">
+                        </div>
+                        <div class="grid grid-cols-4 gap-4">
+                            <div class="aspect-square rounded-lg bg-gray-100 opacity-50 cursor-not-allowed"></div>
+                            <div class="aspect-square rounded-lg bg-gray-100 opacity-50 cursor-not-allowed"></div>
+                        </div>
+                    </div>
+
+                    <!-- Product Info -->
+                    <div class="w-1/2 flex flex-col">
+                        <h1 id="sp-title" class="text-4xl font-bold text-gray-800 mb-2">Product Title</h1>
+                        <p id="sp-id" class="text-xs text-gray-400 mb-4">Item #P000</p>
+                        
+                        <div class="text-3xl font-bold text-primary mb-6" id="sp-price">$0.00</div>
+                        
+                        <div class="prose text-gray-600 mb-8" id="sp-description">
+                            Description goes here.
+                        </div>
+
+                        <div class="space-y-6 mb-8 border-t border-b border-gray-100 py-6">
+                            <div>
+                                <span class="font-semibold text-gray-700 block mb-2">Color</span>
+                                <div id="sp-colors" class="flex gap-2"></div>
+                            </div>
+
+                            <div>
+                                <span class="font-semibold text-gray-700 block mb-2">Size</span>
+                                <div id="sp-sizes" class="flex gap-2"></div>
+                            </div>
+                            
+                            <div>
+                                <span class="font-semibold text-gray-700 mr-2">Material:</span>
+                                <span id="sp-material" class="text-gray-600">Cotton</span>
+                            </div>
+                        </div>
+
+                        <div class="mt-auto flex gap-4">
+                            <div class="w-24">
+                                <label class="block text-xs font-bold text-gray-500 mb-1">QTY</label>
+                                <input type="number" id="sp-qty" value="1" min="1" max="10" class="w-full border border-gray-300 rounded-lg px-3 py-2 text-center focus:ring-secondary focus:border-secondary">
+                            </div>
+                            <button onclick="app.addToCartFromPage()" class="flex-1 bg-primary hover:bg-gray-700 text-white font-bold py-3 rounded-lg transition shadow-lg flex items-center justify-center gap-2">
+                                <i class="fa-solid fa-cart-plus"></i> Add to Cart
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Related Products  -->
+            <div class="mt-16">
+                <h2 class="text-2xl font-bold mb-6">You May Also Like</h2>
+                <div id="sp-related" class="grid grid-cols-4 gap-6"></div>
+            </div>
+        </article>
+
+        <!-- VIEW: SHOPPING CART -->
+        <article id="view-cart" class="view-section hidden">
+            <h1 class="text-3xl font-bold mb-8">Shopping Cart</h1>
+
+            <!-- Flex Row -->
+            <div class="flex flex-row gap-8">
+                <!-- Cart Items -->
+                <div class="w-2/3">
+                    <div class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
+                        <div class="grid grid-cols-12 gap-4 p-4 bg-gray-50 text-sm font-semibold text-gray-600 border-b">
+                            <div class="col-span-6">Product</div>
+                            <div class="col-span-2 text-center">Price</div>
+                            <div class="col-span-2 text-center">Quantity</div>
+                            <div class="col-span-2 text-right">Total</div>
+                        </div>
+                        <div id="cart-items-container" class="divide-y divide-gray-100">
+                            <!-- Cart Items Inserted Here -->
+                        </div>
+                    </div>
+                    <div id="cart-empty-msg" class="hidden text-center py-12 bg-white rounded-xl border border-dashed border-gray-300 mt-4">
+                        <p class="text-gray-500 mb-4">Your cart is currently empty.</p>
+                        <button onclick="app.navigate('browse')" class="text-secondary font-bold hover:underline">Start Shopping</button>
+                    </div>
+                </div>
+
+                <!-- Order Summary -->
+                <div class="w-1/3">
+                    <div class="bg-white p-6 rounded-xl shadow-lg border border-gray-100 sticky top-24">
+                        <h2 class="text-xl font-bold mb-6">Order Summary</h2>
+                        
+                        <div class="mb-6 space-y-4">
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-1">Destination</label>
+                                <select id="cart-destination" onchange="app.renderCartSummary()" class="w-full border-gray-300 rounded-md p-2 border focus:ring-secondary focus:border-secondary">
+                                    <option value="CA">Canada</option>
+                                    <option value="US">United States</option>
+                                    <option value="INT">International</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-1">Shipping Method</label>
+                                <select id="cart-shipping" onchange="app.renderCartSummary()" class="w-full border-gray-300 rounded-md p-2 border focus:ring-secondary focus:border-secondary">
+                                    <!-- Options populated by JS based on destination -->
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="space-y-3 text-gray-600 border-t border-gray-100 pt-4">
+                            <div class="flex justify-between">
+                                <span>Subtotal</span>
+                                <span id="summary-subtotal" class="font-mono">$0.00</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span>Shipping</span>
+                                <span id="summary-shipping" class="font-mono">$0.00</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span>Tax (5% CA only)</span>
+                                <span id="summary-tax" class="font-mono">$0.00</span>
+                            </div>
+                        </div>
+                        
+                        <div class="flex justify-between items-center mt-6 pt-4 border-t border-gray-200">
+                            <span class="text-lg font-bold text-gray-800">Total</span>
+                            <span id="summary-total" class="text-2xl font-bold text-primary font-mono">$0.00</span>
+                        </div>
+
+                        <button id="btn-checkout" onclick="app.checkout()" class="w-full mt-6 bg-secondary hover:bg-red-600 text-white font-bold py-4 rounded-lg shadow-lg transition transform hover:-translate-y-1 disabled:opacity-50 disabled:cursor-not-allowed">
+                            Checkout
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </article>
+
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="bg-gray-800 text-gray-300 py-12 mt-12">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-3 gap-8 mb-8">
+                <div>
+                    <h3 class="text-white text-lg font-bold mb-4">KHATTANAS</h3>
+                    <p class="text-sm text-gray-400">Contemporary fashion for the modern individual. Quality, sustainability, and style woven into every piece.</p>
+                </div>
+                <div>
+                    <h3 class="text-white text-lg font-bold mb-4">Links</h3>
+                    <ul class="space-y-2 text-sm">
+                        <li><a href="#" onclick="app.navigate('home')" class="hover:text-white">Home</a></li>
+                        <li><a href="#" onclick="app.navigate('browse')" class="hover:text-white">Shop All</a></li>
+                        <li><a href="#" onclick="app.openModal('about-dialog')" class="hover:text-white">About Us</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-white text-lg font-bold mb-4">Connect</h3>
+                    <a href="https://github.com/shirazk255/shirazk.github.io" target="_blank" class="text-2xl hover:text-white transition"><i class="fa-brands fa-github"></i></a>
+                </div>
+            </div>
+            <div class="border-t border-gray-700 pt-8 text-center text-sm text-gray-500">
+                &copy; 2025 Khattanas Fashion. Assignment Project.
+            </div>
+        </div>
+    </footer>
+
+    <!-- DIALOG: ABOUT US -->
+    <dialog id="about-dialog" class="p-0 rounded-xl shadow-2xl backdrop:bg-black/50 w-full max-w-md open:animate-fade-in">
+        <div class="bg-white p-6 md:p-8 relative">
+            <button onclick="document.getElementById('about-dialog').close()" class="absolute top-4 right-4 text-gray-400 hover:text-gray-600 text-xl">
+                <i class="fa-solid fa-times"></i>
+            </button>
+            
+            <h2 class="text-2xl font-bold text-primary mb-4">About Khattanas</h2>
+            <div class="space-y-4 text-gray-600">
+                <p>This Single Page Application (SPA) was built for <strong>COMP 3612 Assignment 2</strong>.</p>
+                
+                <div class="bg-gray-50 p-4 rounded-lg border border-gray-100">
+                    <h3 class="font-bold text-gray-800 mb-2">Technologies Used:</h3>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="px-2 py-1 bg-yellow-100 text-yellow-800 text-xs font-bold rounded">Vanilla JS</span>
+                        <span class="px-2 py-1 bg-blue-100 text-blue-800 text-xs font-bold rounded">Tailwind CSS</span>
+                        <span class="px-2 py-1 bg-green-100 text-green-800 text-xs font-bold rounded">HTML5</span>
+                        <span class="px-2 py-1 bg-purple-100 text-purple-800 text-xs font-bold rounded">LocalStorage</span>
+                    </div>
+                </div>
+
+                <p class="text-sm">
+                    Images provided by <a href="https://unsplash.com" class="text-accent underline">Unsplash</a> and placeholders via <a href="https://placehold.co" class="text-accent underline">placehold.co</a>.
+                </p>
+                
+                <div class="mt-6 pt-4 border-t border-gray-100">
+                    <a href="https://github.com/shirazk255/shirazk.github.io" target="_blank" class="flex items-center justify-center gap-2 w-full bg-gray-800 text-white py-2 rounded hover:bg-gray-700 transition">
+                        <i class="fa-brands fa-github"></i> View Source Code
+                    </a>
+                </div>
+                
+                <div class="flex justify-end mt-4">
+                    <button onclick="document.getElementById('about-dialog').close()" class="px-4 py-2 text-sm font-bold text-gray-500 hover:text-gray-800">Close</button>
+                </div>
+            </div>
+        </div>
+    </dialog>
+
+    <!-- TOAST NOTIFICATION CONTAINER -->
+    <div id="toast-container" class="fixed bottom-5 right-5 z-50 flex flex-col gap-2"></div>
+
+    <!-- JAVASCRIPT -->
+    <script>
+        const DATA_URL = "https://gist.githubusercontent.com/rconnolly/d37a491b50203d66d043c26f33dbd798/raw/37b5b68c527ddbe824eaed12073d266d5455432a/clothing-compact.json";
+        
+        // --- Main Application Object ---
+        const app = {
+            data: [],
+            cart: [],
+            state: {
+                currentView: 'home',
+                filters: {
+                    gender: [],
+                    category: [],
+                    color: []
+                },
+                sort: 'name-asc',
+                activeProduct: null
+            },
+
+            // --- Initialization ---
+            init: async function() {
+                // 1. Load Data
+                await this.loadData();
+
+                // 2. Load Cart from LocalStorage
+                const savedCart = localStorage.getItem('khattanas_cart');
+                if (savedCart) {
+                    this.cart = JSON.parse(savedCart);
+                    this.updateCartCount();
+                }
+
+                // 3. Initialize Views
+                this.renderFilters(); // Populate sidebar
+                
+                // 4. Start at Home
+                this.navigate('home');
+
+                // 5. Add Event Listeners for Filters
+                document.querySelectorAll('input[name="filter-gender"]').forEach(el => {
+                    el.addEventListener('change', () => this.handleFilterChange());
+                });
+            },
+
+            // --- Data Handling ---
+            loadData: async function() {
+                // Check LocalStorage first
+                const localData = localStorage.getItem('khattanas_products');
+                if (localData) {
+                    console.log("Loaded data from LocalStorage");
+                    this.data = JSON.parse(localData);
+                } else {
+                    console.log("Fetching data...");
+                    try {
+                        const response = await fetch(DATA_URL);
+                        if (!response.ok) throw new Error('Network response was not ok');
+                        this.data = await response.json();
+                        localStorage.setItem('khattanas_products', JSON.stringify(this.data));
+                    } catch (error) {
+                        console.error("Fetch failed", error);
+                        this.showToast("Failed to load product data. Please try again later.", "error");
+                    }
+                }
+            },
+
+            // --- Routing / Navigation ---
+            navigate: function(viewId, param = null) {
+                // Hide all views
+                document.querySelectorAll('.view-section').forEach(el => el.classList.add('hidden'));
+                window.scrollTo(0,0);
+
+                // Show requested view
+                const target = document.getElementById(`view-${viewId}`);
+                if (target) target.classList.remove('hidden');
+                this.state.currentView = viewId;
+
+                // View Specific Logic
+                switch(viewId) {
+                    case 'home':
+                        break;
+                    case 'gender':
+                        this.renderGenderView(param); // param is 'mens' or 'womens'
+                        break;
+                    case 'browse':
+                        // Reset filters if coming from menu? Maybe keep them. 
+                        // Assignment implies separate pages, but maintaining state is nicer.
+                        // If param exists (e.g., browse?category=Tops), apply it.
+                        if(param && param.category) {
+                            this.clearFilters(false);
+                            // check the box
+                            // this.applyFilter('category', param.category);
+                        }
+                        this.renderBrowse();
+                        break;
+                    case 'singleproduct':
+                        this.renderSingleProduct(param); // param is product object
+                        break;
+                    case 'cart':
+                        this.renderCart();
+                        break;
+                }
+            },
+
+            openModal: function(id) {
+                document.getElementById(id).showModal();
+            },
+
+            // --- Helper: Image Generator ---
+            // generating placeholders using placehold.co URLs
+            getImageUrl: function(product) {
+                // Use product name for text
+                const text = encodeURIComponent(product.name);
+                const cat = product.category.toLowerCase();
+                // Determine color based on gender/cat for variety
+                let bg = 'e2e8f0';
+                let fg = '64748b';
+                if(product.gender === 'womens') { bg = 'fce7f3'; fg = 'db2777'; }
+                else { bg = 'e0f2fe'; fg = '0284c7'; }
+                
+                return `https://placehold.co/600x800/${bg}/${fg}?text=${text}`;
+            },
+
+            // --- View: Gender ---
+            renderGenderView: function(gender) {
+                const title = gender === 'womens' ? "Women's Collection" : "Men's Collection";
+                document.getElementById('gender-title').innerText = title;
+                
+                // Background image
+                const heroEl = document.getElementById('gender-hero');
+                const imgUrl = gender === 'womens' 
+                    ? 'https://images.unsplash.com/photo-1469334031218-e382a71b716b?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80'
+                    : 'https://images.unsplash.com/photo-1617137984095-74e4e5e3613f?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80';
+                heroEl.style.backgroundImage = `url('${imgUrl}')`;
+
+                // Getting unique categories for this gender
+                const categories = [...new Set(this.data
+                    .filter(p => p.gender === gender)
+                    .map(p => p.category))];
+
+                const container = document.getElementById('gender-categories');
+                container.innerHTML = categories.map(cat => `
+                    <div onclick="app.filterFromLanding('${gender}', '${cat}')" 
+                         class="bg-white border border-gray-200 rounded-xl p-8 flex items-center justify-center cursor-pointer hover:shadow-lg hover:border-secondary transition group text-center h-40">
+                        <h3 class="text-xl font-bold text-gray-700 group-hover:text-secondary">${cat}</h3>
+                    </div>
+                `).join('');
+            },
+
+            filterFromLanding: function(gender, category) {
+                this.clearFilters(false);
+                
+                // Set gender
+                const genderCb = document.querySelector(`input[name="filter-gender"][value="${gender}"]`);
+                if(genderCb) genderCb.checked = true;
+
+                // Set category
+                const catCb = document.querySelector(`input[name="filter-category"][value="${category}"]`);
+                if(catCb) catCb.checked = true;
+
+                this.handleFilterChange(); // Update state
+                this.navigate('browse');
+            },
+
+            // --- View: Browse (Filters & Render) ---
+            renderFilters: function() {
+                // 1. Categories
+                const categories = [...new Set(this.data.map(p => p.category))].sort();
+                document.getElementById('filter-categories').innerHTML = categories.map(c => `
+                    <label class="flex items-center space-x-2 cursor-pointer">
+                        <input type="checkbox" name="filter-category" value="${c}" onchange="app.handleFilterChange()" class="form-checkbox text-secondary rounded focus:ring-secondary">
+                        <span>${c}</span>
+                    </label>
+                `).join('');
+
+                // 2. Colors (Extract from array of objects)
+                const colors = new Set();
+                this.data.forEach(p => p.color.forEach(c => colors.add(JSON.stringify(c))));
+                // Deduping by name
+                const uniqueColors = [];
+                const seenColorNames = new Set();
+                Array.from(colors).forEach(cStr => {
+                    const c = JSON.parse(cStr);
+                    if(!seenColorNames.has(c.name)){
+                        seenColorNames.add(c.name);
+                        uniqueColors.push(c);
+                    }
+                });
+                
+                document.getElementById('filter-colors').innerHTML = uniqueColors.map(c => `
+                    <label class="cursor-pointer relative group">
+                        <input type="checkbox" name="filter-color" value="${c.name}" onchange="app.handleFilterChange()" class="peer sr-only">
+                        <div class="w-8 h-8 rounded-full border border-gray-200 shadow-sm peer-checked:ring-2 peer-checked:ring-offset-2 peer-checked:ring-secondary" style="background-color: ${c.hex};" title="${c.name}"></div>
+                        <i class="fa-solid fa-check absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-white text-xs opacity-0 peer-checked:opacity-100 drop-shadow-md"></i>
+                    </label>
+                `).join('');
+            },
+
+            handleFilterChange: function() {
+                // Collecting checked values
+                this.state.filters.gender = Array.from(document.querySelectorAll('input[name="filter-gender"]:checked')).map(cb => cb.value);
+                this.state.filters.category = Array.from(document.querySelectorAll('input[name="filter-category"]:checked')).map(cb => cb.value);
+                this.state.filters.color = Array.from(document.querySelectorAll('input[name="filter-color"]:checked')).map(cb => cb.value);
+                
+                this.renderBrowse();
+            },
+
+            clearFilters: function(render = true) {
+                document.querySelectorAll('input[type="checkbox"]').forEach(cb => cb.checked = false);
+                this.state.filters = { gender: [], category: [], color: [] };
+                if(render) this.renderBrowse();
+            },
+
+            handleSort: function(val) {
+                this.state.sort = val;
+                this.renderBrowse();
+            },
+
+            renderBrowse: function() {
+                const { gender, category, color } = this.state.filters;
+                
+                // 1. Filter
+                let results = this.data.filter(p => {
+                    const matchesGender = gender.length === 0 || gender.includes(p.gender);
+                    const matchesCategory = category.length === 0 || category.includes(p.category);
+                    const matchesColor = color.length === 0 || p.color.some(c => color.includes(c.name));
+                    return matchesGender && matchesCategory && matchesColor;
+                });
+
+                // 2. Sort
+                const [field, dir] = this.state.sort.split('-');
+                results.sort((a, b) => {
+                    if (field === 'price') {
+                        return dir === 'asc' ? a.price - b.price : b.price - a.price;
+                    } else if (field === 'name') {
+                        return dir === 'asc' ? a.name.localeCompare(b.name) : b.name.localeCompare(a.name);
+                    } else if (field === 'category') {
+                        return a.category.localeCompare(b.category);
+                    }
+                });
+
+                // 3. Update UI Elements
+                const grid = document.getElementById('product-grid');
+                const noResults = document.getElementById('no-results');
+                document.getElementById('result-count').innerText = `Showing ${results.length} products`;
+
+                // Update Active Filter Badges
+                const badges = document.getElementById('active-filters');
+                const allFilters = [...gender, ...category, ...color];
+                badges.innerHTML = allFilters.map(f => `
+                    <span class="bg-gray-200 text-gray-700 text-xs font-bold px-2 py-1 rounded-full flex items-center">
+                        ${f} <button onclick="app.removeFilter('${f}')" class="ml-1 hover:text-red-500"><i class="fa-solid fa-times"></i></button>
+                    </span>
+                `).join('');
+
+                if (results.length === 0) {
+                    grid.innerHTML = '';
+                    noResults.classList.remove('hidden');
+                } else {
+                    noResults.classList.add('hidden');
+                    grid.innerHTML = results.map(p => `
+                        <div class="bg-white rounded-xl shadow-sm hover:shadow-md transition overflow-hidden border border-gray-100 flex flex-col h-full">
+                            <div class="relative h-64 cursor-pointer bg-gray-100" onclick="app.showProduct('${p.id}')">
+                                <img src="${this.getImageUrl(p)}" loading="lazy" class="w-full h-full object-cover hover:opacity-90 transition">
+                                <div class="absolute top-3 right-3 bg-white/90 backdrop-blur px-2 py-1 rounded text-xs font-bold text-gray-600 shadow-sm">
+                                    $${p.price.toFixed(2)}
+                                </div>
+                            </div>
+                            <div class="p-4 flex flex-col flex-grow">
+                                <div class="text-xs text-gray-500 mb-1 uppercase tracking-wide">${p.category}</div>
+                                <h3 class="font-bold text-gray-800 mb-2 hover:text-secondary cursor-pointer" onclick="app.showProduct('${p.id}')">${p.name}</h3>
+                                <div class="mt-auto flex justify-between items-center">
+                                    <span class="font-bold text-primary">$${p.price.toFixed(2)}</span>
+                                    <button onclick="app.quickAdd('${p.id}')" class="w-8 h-8 rounded-full bg-gray-100 hover:bg-secondary hover:text-white flex items-center justify-center transition text-gray-600">
+                                        <i class="fa-solid fa-plus"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    `).join('');
+                }
+            },
+
+            removeFilter: function(val) {
+                // Uncheck box
+                const cb = document.querySelector(`input[value="${val}"]`);
+                if(cb) {
+                    cb.checked = false;
+                    this.handleFilterChange();
+                }
+            },
+
+            // --- View: Single Product ---
+            showProduct: function(id) {
+                const product = this.data.find(p => p.id === id);
+                if(product) this.navigate('singleproduct', product);
+            },
+
+            renderSingleProduct: function(p) {
+                this.state.activeProduct = p;
+                window.scrollTo(0,0);
+
+                // Update Content
+                document.getElementById('sp-image').src = this.getImageUrl(p);
+                document.getElementById('sp-title').innerText = p.name;
+                document.getElementById('sp-id').innerText = `Item #${p.id}`;
+                document.getElementById('sp-price').innerText = `$${p.price.toFixed(2)}`;
+                document.getElementById('sp-description').innerText = p.description;
+                document.getElementById('sp-material').innerText = p.material;
+                document.getElementById('sp-qty').value = 1;
+
+                // Breadcrumbs
+                document.getElementById('sp-breadcrumb-gender').innerText = p.gender;
+                document.getElementById('sp-breadcrumb-category').innerText = p.category;
+                document.getElementById('sp-breadcrumb-name').innerText = p.name;
+
+                // Render Options
+                const colorsDiv = document.getElementById('sp-colors');
+                colorsDiv.innerHTML = p.color.map((c, idx) => `
+                    <label class="cursor-pointer">
+                        <input type="radio" name="sp-color" value="${c.name}" ${idx===0 ? 'checked':''} class="peer sr-only">
+                        <div class="w-10 h-10 rounded-full border-2 border-gray-200 peer-checked:border-secondary peer-checked:ring-2 ring-secondary/20" style="background-color: ${c.hex}" title="${c.name}"></div>
+                    </label>
+                `).join('');
+
+                const sizesDiv = document.getElementById('sp-sizes');
+                sizesDiv.innerHTML = p.sizes.map((s, idx) => `
+                    <label class="cursor-pointer">
+                        <input type="radio" name="sp-size" value="${s}" ${idx===0 ? 'checked':''} class="peer sr-only">
+                        <div class="px-4 py-2 border border-gray-300 rounded-md text-sm font-semibold peer-checked:bg-secondary peer-checked:text-white peer-checked:border-secondary transition">${s}</div>
+                    </label>
+                `).join('');
+
+                // Related Products
+                const related = this.data
+                    .filter(item => item.category === p.category && item.id !== p.id)
+                    .slice(0, 4);
+                
+                document.getElementById('sp-related').innerHTML = related.map(rp => `
+                    <div class="cursor-pointer group" onclick="app.showProduct('${rp.id}')">
+                         <div class="bg-gray-100 rounded-lg h-48 mb-3 overflow-hidden">
+                            <img src="${this.getImageUrl(rp)}" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
+                         </div>
+                         <h4 class="font-bold text-sm text-gray-800 group-hover:text-secondary truncate">${rp.name}</h4>
+                         <p class="text-gray-500 text-sm">$${rp.price.toFixed(2)}</p>
+                    </div>
+                `).join('');
+            },
+
+            addToCartFromPage: function() {
+                if(!this.state.activeProduct) return;
+                
+                const p = this.state.activeProduct;
+                const qty = parseInt(document.getElementById('sp-qty').value) || 1;
+                const color = document.querySelector('input[name="sp-color"]:checked').value;
+                const size = document.querySelector('input[name="sp-size"]:checked').value;
+
+                this.addToCart(p, qty, color, size);
+            },
+
+            quickAdd: function(id) {
+                const p = this.data.find(x => x.id === id);
+                // Defaults
+                const color = p.color[0].name;
+                const size = p.sizes[0];
+                this.addToCart(p, 1, color, size);
+            },
+
+            // --- Cart Logic ---
+            addToCart: function(product, qty, color, size) {
+                // Check if exists (Same ID, Color, Size)
+                const existing = this.cart.find(item => item.id === product.id && item.selectedColor === color && item.selectedSize === size);
+                
+                if(existing) {
+                    existing.qty += qty;
+                } else {
+                    this.cart.push({
+                        id: product.id,
+                        name: product.name,
+                        price: product.price,
+                        img: this.getImageUrl(product),
+                        selectedColor: color,
+                        selectedSize: size,
+                        qty: qty
+                    });
+                }
+
+                this.saveCart();
+                this.showToast(`Added ${product.name} to cart`);
+                this.updateCartCount();
+            },
+
+            removeFromCart: function(index) {
+                this.cart.splice(index, 1);
+                this.saveCart();
+                this.renderCart(); // Re-render cart view
+                this.updateCartCount();
+            },
+
+            updateCartCount: function() {
+                const total = this.cart.reduce((sum, item) => sum + item.qty, 0);
+                const badge = document.getElementById('cart-count');
+                badge.innerText = total;
+                
+                if(total > 0) {
+                    badge.classList.remove('scale-0');
+                    badge.classList.add('scale-100');
+                } else {
+                    badge.classList.remove('scale-100');
+                    badge.classList.add('scale-0');
+                }
+            },
+
+            saveCart: function() {
+                localStorage.setItem('khattanas_cart', JSON.stringify(this.cart));
+            },
+
+            renderCart: function() {
+                const container = document.getElementById('cart-items-container');
+                const emptyMsg = document.getElementById('cart-empty-msg');
+                const checkoutBtn = document.getElementById('btn-checkout');
+
+                if(this.cart.length === 0) {
+                    container.innerHTML = '';
+                    emptyMsg.classList.remove('hidden');
+                    checkoutBtn.disabled = true;
+                    this.renderCartSummary(); // Clear totals
+                    return;
+                }
+
+                emptyMsg.classList.add('hidden');
+                checkoutBtn.disabled = false;
+
+                container.innerHTML = this.cart.map((item, idx) => `
+                    <div class="grid grid-cols-12 gap-4 p-4 items-center">
+                        <div class="col-span-6 flex gap-4">
+                            <div class="w-16 h-16 bg-gray-100 rounded overflow-hidden flex-shrink-0">
+                                <img src="${item.img}" class="w-full h-full object-cover">
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-gray-800 text-sm md:text-base">${item.name}</h4>
+                                <div class="text-xs text-gray-500">
+                                    <span class="inline-block w-3 h-3 rounded-full border mr-1 align-middle" style="background-color: ${this.getColorHex(item.id, item.selectedColor)}"></span>
+                                    ${item.selectedColor} / ${item.selectedSize}
+                                </div>
+                                <button onclick="app.removeFromCart(${idx})" class="text-red-500 text-xs hover:underline mt-1">Remove</button>
+                            </div>
+                        </div>
+                        <div class="col-span-2 text-center font-medium text-gray-600">$${item.price.toFixed(2)}</div>
+                        <div class="col-span-2 text-center">
+                            <input type="number" min="1" value="${item.qty}" onchange="app.updateCartQty(${idx}, this.value)" class="w-12 text-center border rounded p-1 text-sm">
+                        </div>
+                        <div class="col-span-2 text-right font-bold text-gray-800">$${(item.price * item.qty).toFixed(2)}</div>
+                    </div>
+                `).join('');
+
+                this.renderCartSummary();
+            },
+
+            updateCartQty: function(index, val) {
+                const newQty = parseInt(val);
+                if(newQty > 0) {
+                    this.cart[index].qty = newQty;
+                    this.saveCart();
+                    this.renderCart();
+                    this.updateCartCount();
+                }
+            },
+
+            getColorHex: function(productId, colorName) {
+                const p = this.data.find(x => x.id === productId);
+                if(p) {
+                    const c = p.color.find(x => x.name === colorName);
+                    return c ? c.hex : '#ccc';
+                }
+                return '#ccc';
+            },
+
+            // --- Cart Summary & Shipping Logic ---
+            renderCartSummary: function() {
+                const subtotal = this.cart.reduce((sum, item) => sum + (item.price * item.qty), 0);
+                const dest = document.getElementById('cart-destination').value;
+                const shipSelect = document.getElementById('cart-shipping');
+                
+                // Populate Shipping Options dynamically if needed
+                // Cost based on destination
+                // If subtotal > 500, Free
+                // Else: 
+                // CA: Std $10, Exp $25, Pri $35
+                // US: Std $15, Exp $25, Pri $50
+                // INT: Std $20, Exp $30, Pri $50
+                
+                // Save selection or default to Standard (idx 0)
+                const currentShipIdx = shipSelect.selectedIndex === -1 ? 0 : shipSelect.selectedIndex;
+                
+                let options = [];
+                if(subtotal > 500) {
+                    options = [{name: 'Free Shipping', cost: 0}];
+                } else {
+                    if(dest === 'CA') options = [{name: 'Standard ($10)', cost: 10}, {name: 'Express ($25)', cost: 25}, {name: 'Priority ($35)', cost: 35}];
+                    else if(dest === 'US') options = [{name: 'Standard ($15)', cost: 15}, {name: 'Express ($25)', cost: 25}, {name: 'Priority ($50)', cost: 50}];
+                    else options = [{name: 'Standard ($20)', cost: 20}, {name: 'Express ($30)', cost: 30}, {name: 'Priority ($50)', cost: 50}];
+                }
+
+                // Render options
+                shipSelect.innerHTML = options.map(o => `<option value="${o.cost}">${o.name}</option>`).join('');
+                shipSelect.selectedIndex = Math.min(currentShipIdx, options.length - 1);
+
+                const shippingCost = parseFloat(shipSelect.value);
+                
+                // Tax: 5% only if Canada
+                const tax = dest === 'CA' ? subtotal * 0.05 : 0;
+
+                const total = subtotal + shippingCost + tax;
+
+                // Render DOM
+                document.getElementById('summary-subtotal').innerText = `$${subtotal.toFixed(2)}`;
+                document.getElementById('summary-shipping').innerText = `$${shippingCost.toFixed(2)}`;
+                document.getElementById('summary-tax').innerText = `$${tax.toFixed(2)}`;
+                document.getElementById('summary-total').innerText = `$${total.toFixed(2)}`;
+            },
+
+            checkout: function() {
+                this.showToast("Order Placed Successfully!", "success");
+                this.cart = [];
+                this.saveCart();
+                this.updateCartCount();
+                setTimeout(() => this.navigate('home'), 1500);
+            },
+
+            // --- Utilities ---
+            showToast: function(message, type = 'info') {
+                const container = document.getElementById('toast-container');
+                const toast = document.createElement('div');
+                
+                const colorClass = type === 'success' ? 'bg-green-600' : 'bg-gray-800';
+                const icon = type === 'success' ? '<i class="fa-solid fa-check-circle"></i>' : '<i class="fa-solid fa-info-circle"></i>';
+
+                toast.className = `${colorClass} text-white px-6 py-4 rounded-lg shadow-2xl flex items-center gap-3 toast-enter`;
+                toast.innerHTML = `${icon} <span class="font-semibold">${message}</span>`;
+                
+                container.appendChild(toast);
+
+                setTimeout(() => {
+                    toast.style.opacity = '0';
+                    toast.style.transform = 'translateY(20px)';
+                    toast.style.transition = 'all 0.3s ease';
+                    setTimeout(() => toast.remove(), 300);
+                }, 3000);
+            }
+        };
+
+        // Start App on Load
+        window.addEventListener('DOMContentLoaded', () => {
+            app.init();
+        });
+    </script>
+</body>
+</html>
